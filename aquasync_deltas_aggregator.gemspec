@@ -12,6 +12,7 @@ Gem::Specification.new do |gem|
   gem.homepage = 'https://github.com/AQAquamarine/aquasync_deltas_aggregator'
 
   gem.add_dependency 'simple_uuid', ["~> 0.4"]
+  gem.add_dependency 'aquasync_model', ["~> 0.1"]
   gem.add_development_dependency 'rspec', ["~> 3.0"]
   gem.add_development_dependency 'guard-rspec', ["~>4.3"]
   gem.add_development_dependency 'factory_girl', ["~> 4.4"]
