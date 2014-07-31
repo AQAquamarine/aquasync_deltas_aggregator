@@ -1,6 +1,8 @@
 Aquasync DeltasAggregator
 ===
 
+[![Gem Version](https://badge.fury.io/rb/aquasync_deltas_aggregator.svg)](http://badge.fury.io/rb/aquasync_deltas_aggregator)
+
 ```rb
 require 'aquasync_deltas_aggregator'
 
