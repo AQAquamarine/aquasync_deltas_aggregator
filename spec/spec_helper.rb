@@ -14,9 +14,9 @@ require_relative '../initializer/mongoid'
 require_relative 'hoge'
 require_relative 'huga'
 
-require_relative '../delta_pack/delta_pack_builder'
-require_relative '../delta_pack/delta_pack_unpacker'
-require_relative '../aggregators/deltas_aggregator'
+require_relative '../lib/delta_pack/delta_pack_builder'
+require_relative '../lib/delta_pack/delta_pack_unpacker'
+require_relative '../lib/aggregators/deltas_aggregator'
 
 DatabaseCleaner.strategy = :truncation
 
