@@ -1,7 +1,7 @@
 Aquasync DeltasAggregator
 ===
 
-```
+```rb
 require 'aquasync_deltas_aggregator'
 
 # @example Initialization
