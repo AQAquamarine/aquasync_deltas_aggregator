@@ -1,0 +1,6 @@
+.idea
+config/mongoid.yml
+tmp
+doc
+.yardoc
+*.gem
