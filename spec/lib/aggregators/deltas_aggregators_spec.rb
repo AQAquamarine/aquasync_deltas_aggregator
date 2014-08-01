@@ -66,5 +66,13 @@ describe DeltasAggregator do
 
       it("should save new record") { expect(Hoge.find_by(gid: "aaaaaaaa-e29b-41d4-a716-446655440000").hoge).to eq "new" }
     end
+
+    context "when invalid data is given" do
+      it {
+        expect {
+          aggregator.commit_delta_pack(invalid_delta_pack)
+        }.to raise_error
+      }
+    end
   end
 end

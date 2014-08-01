@@ -1,14 +1,14 @@
 PATH
   remote: .
   specs:
-    aquasync_deltas_aggregator (0.1.0)
+    aquasync_deltas_aggregator (0.1.1)
       aquasync_model (~> 0.1)
       simple_uuid (~> 0.4)
 
 PATH
   remote: ../aquasync-mockserver
   specs:
-    aquasync_model (0.1.0)
+    aquasync_model (0.1.2)
       activerecord (~> 4.0)
       activesupport (~> 4.0)
       mongoid (~> 4.0)

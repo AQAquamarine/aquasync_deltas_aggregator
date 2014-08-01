@@ -67,3 +67,20 @@ def new_gid_delta_pack
       ]
   }
 end
+
+def invalid_delta_pack
+  {
+      "_id" => "550e8400-e29b-41d4-a716-446655440000",
+      "Hoge" => [
+          {
+              "gid" => "aaaaaaaa-e29b-41d4-a716-446655440000", # no deviceToken
+              "localTimestamp" => 2034567789,
+              "hoge" => "new"
+          },
+          {
+              "gid" => "aaaaaaaa-e29b-41d4-a716-446655440000", # no deviceToken and localTimestamp
+              "hoge" => "new"
+          }
+      ]
+  }
+end

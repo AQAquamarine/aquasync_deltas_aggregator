@@ -10,7 +10,7 @@ require_relative '../delta_pack/delta_pack_builder'
 # @example Obtain a DeltaPack from registered models.
 #   aggregator.pack_deltas
 # @example Commit a DeltaPack to registered models.
-#   aggregator.unpack_and_commit_delta_pack(delta_pack)
+#   aggregator.commit_delta_pack(delta_pack)
 # @note Please implement #aq_deltas and #aq_commit_deltas to models. (DeltasAggregator requirement.)
 class DeltasAggregator
   attr_accessor :model_managers
