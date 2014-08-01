@@ -1,6 +1,6 @@
 Gem::Specification.new do |gem|
   gem.name    = 'aquasync_deltas_aggregator'
-  gem.version = '0.1.0'
+  gem.version = '0.1.1'
   gem.date    = Date.today.to_s
 
   gem.summary = "An aggregator for pack DeltaPack and unpack DeltaPack."
@@ -18,5 +18,5 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'factory_girl', ["~> 4.4"]
   gem.add_development_dependency 'database_cleaner', ["~> 1.3"]
 
-  gem.files = []
+  gem.files = ["lib/aggregators/deltas_aggregator.rb", "lib/delta_pack/delta_pack_builder.rb", "lib/delta_pack/delta_pack_unpacker.rb", "lib/aquasync_deltas_aggregator.rb"]
 end
