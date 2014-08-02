@@ -53,7 +53,7 @@ class DeltasAggregator
     unpacked_deltas = DeltaPackUnpacker.new.unpack(delta_pack).deltas
     unpacked_deltas.each do |model_name, deltas|
       manager = model_manager_class(model_name)
-      manager.aq_commit_deltas deltas
+      manager.aq_commit_deltas deltas, opts
     end
   end
 
@@ -63,8 +63,18 @@ class DeltasAggregator
   def pack_deltas(from_ust)
     builder = DeltaPackBuilder.new
     model_managers.each do |model_name, model_manager|
-      builder.push_documents model_manager.aq_deltas(from_ust)
+      builder.push_documents model_manager.aq_deltas(from_ust, opts)
     end
     builder.delta_pack
+  end
+
+  # Returns begin_of_association_chain opts if association chain is added.
+  # @return [Hash]
+  def opts
+    if association_chain
+      { begin_of_association_chain: association_chain }
+    else
+      { }
+    end
   end
 end
