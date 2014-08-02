@@ -77,4 +77,10 @@ class DeltasAggregator
       { }
     end
   end
+
+  # @deprecated
+  def regist_model_manager(*klasses)
+    warn "DEPRECATED"
+    add_model_manager(*klasses)
+  end
 end
