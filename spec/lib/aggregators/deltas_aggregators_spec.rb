@@ -10,7 +10,7 @@ describe DeltasAggregator do
 
   let(:aggregator) {
     aggregator = DeltasAggregator.new
-    aggregator.regist_model_manager(Hoge, Huga)
+    aggregator.add_model_manager(Hoge, Huga)
     aggregator
   }
 

@@ -13,7 +13,7 @@ require_relative '../delta_pack/delta_pack_builder'
 #   aggregator.commit_delta_pack(delta_pack)
 # @note Please implement #aq_deltas and #aq_commit_deltas to models. (DeltasAggregator requirement.)
 class DeltasAggregator
-  attr_accessor :model_managers
+  attr_accessor :model_managers, :association_chain
 
   def initialize
     self.model_managers = {}
@@ -22,11 +22,21 @@ class DeltasAggregator
   # Adds target models to aggregate.
   # @param klass [Aquasync::Base]
   # @return [NilClass]
-  def regist_model_manager(*klasses)
+  def add_model_manager(*klasses)
     klasses.each do |klass|
       name = klass.name
       model_managers[name] = klass
     end
+  end
+
+  # Adds association chain.
+  # @param klass [Class]
+  # @return [NilClass]
+  # @example Add a user
+  #   aggregator.add_association_chain current_user
+  #   # so that the aggregator will call Model.aq_commit_deltas deltas, begin_of_association_chain: current_user
+  def add_association_chain(klass)
+    self.association_chain = klass
   end
 
   # Returns registered model manager from name.
@@ -44,7 +54,7 @@ class DeltasAggregator
     unpacked_deltas.each do |model_name, deltas|
       manager = model_manager_class(model_name)
       manager.aq_commit_deltas deltas
-    end # [TODO] raise error if any commit failed.
+    end
   end
 
   # Packs deltas collected from registered model managers via #aq_deltas to DeltaPack.
