@@ -1,6 +1,6 @@
 Gem::Specification.new do |gem|
   gem.name    = 'aquasync_deltas_aggregator'
-  gem.version = '0.1.1'
+  gem.version = '0.2.0'
   gem.date    = Date.today.to_s
 
   gem.summary = "An aggregator for pack DeltaPack and unpack DeltaPack."
