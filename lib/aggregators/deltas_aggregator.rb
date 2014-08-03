@@ -8,12 +8,16 @@ require_relative '../delta_pack/delta_pack_builder'
 #   aggregator = DeltasAggregator.new
 #   aggregator.regist_model_manager(Book, Author)
 # @example Obtain a DeltaPack from registered models.
-#   aggregator.pack_deltas
+#   aggregator.pack_deltas(ust)
 # @example Commit a DeltaPack to registered models.
 #   aggregator.commit_delta_pack(delta_pack)
+# @example Add begin_of_association_chain options
+#   aggregator.pack_deltas(ust, begin_of_association_chain: current_user)
+# @example Add append_attributes options
+#   aggregator.pack_deltas(ust, append_attributes: {all: {user_id: "some_id"}})
 # @note Please implement #aq_deltas and #aq_commit_deltas to models. (DeltasAggregator requirement.)
 class DeltasAggregator
-  attr_accessor :model_managers, :association_chain
+  attr_accessor :model_managers
 
   def initialize
     self.model_managers = {}
@@ -29,16 +33,6 @@ class DeltasAggregator
     end
   end
 
-  # Adds association chain.
-  # @param klass [Class]
-  # @return [NilClass]
-  # @example Add a user
-  #   aggregator.add_association_chain current_user
-  #   # so that the aggregator will call Model.aq_commit_deltas deltas, begin_of_association_chain: current_user
-  def add_association_chain(klass)
-    self.association_chain = klass
-  end
-
   # Returns registered model manager from name.
   # @param [String] name
   # @return [Aquasync::Base]
@@ -49,7 +43,7 @@ class DeltasAggregator
   # Unpacks a DeltaPack and delegates #aq_commit_deltas to registered model managers.
   # @param [Hash] A DeltaPack (https://github.com/AQAquamarine/aquasync-protocol/blob/master/deltapack.md)
   # @return [NilClass]
-  def commit_delta_pack(delta_pack)
+  def commit_delta_pack(delta_pack, opts = {})
     unpacked_deltas = DeltaPackUnpacker.new.unpack(delta_pack).deltas
     unpacked_deltas.each do |model_name, deltas|
       manager = model_manager_class(model_name)
@@ -60,22 +54,12 @@ class DeltasAggregator
   # Packs deltas collected from registered model managers via #aq_deltas to DeltaPack.
   # @param [Integer] from_ust latestUST
   # @return [Hash] A DeltaPack (https://github.com/AQAquamarine/aquasync-protocol/blob/master/deltapack.md)
-  def pack_deltas(from_ust)
+  def pack_deltas(from_ust, opts = {})
     builder = DeltaPackBuilder.new
     model_managers.each do |model_name, model_manager|
       builder.push_documents model_manager.aq_deltas(from_ust, opts)
     end
     builder.delta_pack
-  end
-
-  # Returns begin_of_association_chain opts if association chain is added.
-  # @return [Hash]
-  def opts
-    if association_chain
-      { begin_of_association_chain: association_chain }
-    else
-      { }
-    end
   end
 
   # @deprecated
